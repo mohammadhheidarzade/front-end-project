@@ -1,7 +1,22 @@
 <div class="container">
-  <i class="fa-brands fa-uncharted"></i>
-  <div class="header"></div>
-  <div class="right-side"></div>
+  <div class="icon">
+    <fa-icon [icon]="icon"></fa-icon>
+  </div>
+
+  <div class="header">
+    <div [ngClass]="{'is-selected': module.id === selectedModule?.id}"
+         *ngFor="let module of modules"
+          (click)="moduleClicked(module)">
+      {{module.name}}
+    </div>
+  </div>
+  <div class="right-side">
+    <div [ngClass]="{'is-selected': subModule.id === selectedSubModule?.id}"
+         *ngFor="let subModule of selectedModule?.subModules"
+        (click)="subModuleClicked(subModule)" >
+      <fa-icon [icon]="subModule?.icon"></fa-icon>
+    </div>
+  </div>
   <div class="content">
     <ng-content></ng-content>
   </div>

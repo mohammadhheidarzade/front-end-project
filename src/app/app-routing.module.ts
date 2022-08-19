@@ -6,21 +6,41 @@ import {UploadComponent} from "./upload/upload.component";
 
 const routes: Routes = [
   {
-    path: 'explorer',
-    component: ExplorerComponent
-  },
-  {
     path: 'visualizer',
-    component: VisualizerComponent
+    children: [
+      {
+        path: 'graph',
+        component: VisualizerComponent
+      },
+      {
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: 'graph'
+      }
+    ]
   },
   {
-    path: 'upload',
-    component: UploadComponent
+    path: 'data',
+    children: [
+      {
+        path: 'upload',
+        component: UploadComponent
+      },
+      {
+        path: 'explorer',
+        component: ExplorerComponent
+      },
+      {
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: 'explorer'
+      }
+    ]
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'explorer'
+    redirectTo: 'data/explorer'
   }
 ];
 

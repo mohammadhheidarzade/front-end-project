@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseComponent } from './base.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 
@@ -12,7 +13,8 @@ import { BaseComponent } from './base.component';
     BaseComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ]
 })
 export class BaseModule { }
