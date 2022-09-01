@@ -1,61 +1,55 @@
-import {Component, OnInit} from '@angular/core';
-import {faDiagramProject, faShareNodes, faTable, faUpload} from "@fortawesome/free-solid-svg-icons";
-import {IconDefinition} from "@fortawesome/fontawesome-common-types";
-import {Module} from "./models/module";
-import {NavigationEnd, Router} from "@angular/router";
-import {SubModule} from "./models/sub-module";
+import { Component, OnInit } from "@angular/core";
+import { Module } from "./models/module";
+import { NavigationEnd, Router } from "@angular/router";
+import { SubModule } from "./models/sub-module";
 
 @Component({
-  selector: 'app-base',
-  templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  selector: "app-base",
+  templateUrl: "./base.component.html",
+  styleUrls: ["./base.component.scss"],
 })
-export class BaseComponent implements OnInit {
-  public icon: IconDefinition = faDiagramProject;
+export class BaseComponent /*implements OnInit*/ {
   public selectedModule?: Module;
   public selectedSubModule?: SubModule;
 
   public modules: Module[] = [
     {
-      id: 'data',
-      name: 'داده',
+      id: "data",
+      name: "Explorer",
       subModules: [
         {
-          id: 'explorer',
-          icon: faTable,
-          url: 'explorer'
+          id: "explorer",
+          icon: "fa-regular fa-table",
+          url: "explorer",
         },
-        {
-          id: 'upload',
-          icon: faUpload,
-          url: 'upload'
-        }
-      ]
+      ],
     },
     {
-      id: 'visualizer',
-      name: 'گراف',
+      id: "visualizer",
+      name: "Visualizer",
       subModules: [
         {
-          id: 'graph',
-          icon: faShareNodes,
-          url: 'graph'
-        }
-      ]
-    }
+          id: "graph",
+          icon: "fa-solid fa-share-nodes",
+          url: "graph",
+        },
+      ],
+    },
   ];
 
   public constructor(private route: Router) {}
 
   public ngOnInit(): void {
-    this.route.events.subscribe(changes => {
+    this.route.events.subscribe((changes) => {
       if (!(changes instanceof NavigationEnd)) return;
-      const parts = changes.urlAfterRedirects.substring(1).split('/');
+      const parts = changes.urlAfterRedirects.substring(1).split("/");
 
       if (parts.length < 2) return;
 
-      this.selectedModule = this.modules.find(x => x.id === parts[0]);
-      this.selectedSubModule = this.selectedModule?.subModules.find(x => x.id === parts[1]);
+      this.selectedModule = this.modules.find((x) => x.id === parts[0]);
+      this.selectedSubModule = this.selectedModule?.subModules.find(
+        (x) => x.id === parts[1]
+      );
     });
   }
 

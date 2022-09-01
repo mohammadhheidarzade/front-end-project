@@ -1,26 +1,17 @@
-<div class="container">
-  <div class="icon">
-    <fa-icon [icon]="icon"></fa-icon>
-  </div>
-
-  <div class="header">
-    <div [ngClass]="{'is-selected': module.id === selectedModule?.id}"
-         *ngFor="let module of modules"
-          (click)="moduleClicked(module)">
-      {{module.name}}
-    </div>
-  </div>
-  <div class="right-side">
-    <div [ngClass]="{'is-selected': subModule.id === selectedSubModule?.id}"
-         *ngFor="let subModule of selectedModule?.subModules"
-        (click)="subModuleClicked(subModule)" >
-      <fa-icon [icon]="subModule?.icon"></fa-icon>
-    </div>
-  </div>
-  <div class="content">
+<nz-layout>
+  <nz-header>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <li
+        *ngFor="let module of modules"
+        nz-menu-item
+        [nzSelected]="module.id === selectedModule?.id"
+        (click)="moduleClicked(module)"
+      >
+        {{ module.name }}
+      </li>
+    </ul>
+  </nz-header>
+  <nz-content>
     <ng-content></ng-content>
-  </div>
-</div>
-
-
-
+  </nz-content>
+</nz-layout>

@@ -1,51 +1,51 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {ExplorerComponent} from "./explorer/explorer.component";
-import {VisualizerComponent} from "./visualizer/visualizer.component";
-import {UploadComponent} from "./upload/upload.component";
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ExplorerComponent } from "./explorer/explorer.component";
+import { VisualizerComponent } from "./visualizer/visualizer.component";
+import { UploadComponent } from "./upload/upload.component";
 
 const routes: Routes = [
   {
-    path: 'visualizer',
+    path: "visualizer",
     children: [
       {
-        path: 'graph',
-        component: VisualizerComponent
+        path: "graph",
+        component: VisualizerComponent,
       },
       {
-        path: '**',
-        pathMatch: 'full',
-        redirectTo: 'graph'
-      }
-    ]
+        path: "**",
+        pathMatch: "full",
+        redirectTo: "graph",
+      },
+    ],
   },
   {
-    path: 'data',
+    path: "data",
     children: [
       {
-        path: 'upload',
-        component: UploadComponent
+        path: "upload",
+        component: UploadComponent,
       },
       {
-        path: 'explorer',
-        component: ExplorerComponent
+        path: "explorer",
+        component: ExplorerComponent,
       },
       {
-        path: '**',
-        pathMatch: 'full',
-        redirectTo: 'explorer'
-      }
-    ]
+        path: "**",
+        pathMatch: "full",
+        redirectTo: "explorer",
+      },
+    ],
   },
   {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: 'data/explorer'
-  }
+    path: "**",
+    pathMatch: "full",
+    redirectTo: "data/explorer",
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

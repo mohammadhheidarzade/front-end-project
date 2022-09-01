@@ -1,80 +1,104 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-declare var require: any
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import G6 from "@antv/g6";
 
 @Component({
-  selector: 'app-visualizer',
-  templateUrl: './visualizer.component.html',
-  styleUrls: ['./visualizer.component.scss']
+  selector: "app-visualizer",
+  templateUrl: "./visualizer.component.html",
+  styleUrls: ["./visualizer.component.scss"],
 })
 export class VisualizerComponent implements OnInit {
-  private ogma: any;
-  private nodes: any = [];
-  private links: any = [];
-  private nodesMaxCount: number = 10;
-  private nodesCount!: number;
-  private linksCount!: number;
-  private width!: number;
-  private height!: number;
-
   ngOnInit(): void {
     this.initOgma();
   }
 
   private initOgma(): void {
-    const Ogma = require('../../assets/ogma.min.js');
-    this.ogma = new Ogma({
-      container: 'graph-container',
-      options: {
-        backgroundColor: '#514F6A'
-      }
+    const data = {
+      nodes: [
+        {
+          id: "node1",
+          x: 100,
+          y: 200,
+          size: 70,
+        },
+        {
+          id: "node2",
+          x: 300,
+          y: 200,
+          size: 70,
+        },
+      ],
+      edges: [
+        {
+          source: "node1",
+          target: "node2",
+          size: 15,
+        },
+      ],
+    };
+
+    const graph = new G6.Graph({
+      container: "graph-container",
+      width: 800,
+      height: 500,
+      modes: {
+        default: ["drag-canvas", "drag-node", "zoom-canvas"],
+      },
+      defaultNode: {
+        style: {
+          fill: "#41228D",
+        },
+      },
+      defaultEdge: {
+        style: {
+          stroke: "#41228D",
+        },
+      },
+      nodeStateStyles: {
+        hover: {
+          fill: "lightsteelblue",
+        },
+        click: {
+          stroke: "#000",
+          lineWidth: 3,
+        },
+      },
+      edgeStateStyles: {
+        click: {
+          stroke: "steelblue",
+        },
+        hover: {
+          stroke: "steelblue",
+        },
+      },
     });
 
-    this.width = this.ogma.getContainer().offsetWidth;
-    this.height = this.ogma.getContainer().offsetHeight;
-    // graph-container width and height
+    graph.on("node:mouseenter", (e) => {
+      const nodeItem = e.item; // Get the target item
+      graph.setItemState(nodeItem as any, "hover", true);
+    });
 
-    this.nodesCount = Math.floor(Math.random() * this.nodesMaxCount) + 1;
-    this.linksCount = Math.floor(Math.random() * this.nodesMaxCount);
-    // random nodes count and links count
+    graph.on("node:mouseleave", (e) => {
+      const nodeItem = e.item;
+      graph.setItemState(nodeItem as any, "hover", false);
+    });
 
-    // creating nodes
-    this.nodes = [];
-    for (let i = 0; i < this.nodesCount; i++) {
-      const randomX = Math.random() * this.width - this.width / 2;
-      const randomY = Math.random() * this.height - this.height / 2;
+    graph.on("edge:mouseenter", (e) => {
+      const nodeItem = e.item; // Get the target item
+      graph.setItemState(nodeItem as any, "hover", true);
+    });
 
-      this.nodes.push({
-        id: 'n' + i,
-        data: { name: 'Node ' + i },
-        attributes: { x: randomX, y: randomY, radius: 20 },
-      }); // data is a custom dictionary for containing data
-    }
+    graph.on("edge:mouseleave", (e) => {
+      const nodeItem = e.item;
+      graph.setItemState(nodeItem as any, "hover", false);
+    });
 
-    this.ogma.addNodes(this.nodes);
-    // adding created nodes to ogma
-
-    // creating links
-    this.links = [] as any;
-    for (let i = 0; i < this.linksCount; i++) {
-      const sourceId = 'n' + Math.floor(Math.random() * this.nodesCount);
-      const targetId = 'n' + Math.floor(Math.random() * this.nodesCount);
-
-      if (sourceId === targetId && this.nodesCount !== 1) {
-        i--;
-        continue;
-      }
-
-      const link = {
-        id: 'e' + i,
-        source: sourceId,
-        target: targetId,
-        data: { name: 'parent' },
-      };
-
-      this.links.push(link); // data is a custom dictionary for containing data
-    }
-
-    this.ogma.addEdges(this.links);
-    // adding created links to ogma
+    graph.data(data);
+    graph.render();
   }
 }
