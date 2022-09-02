@@ -6,10 +6,11 @@ import {CommonModule} from '@angular/common';
 import {LayoutWrapperModule} from './shared/components/layout-wrapper/layout-wrapper.module';
 import {ExplorerViewComponent} from './view/explorer-view/explorer-view.component';
 import {VisualizerViewModule} from './view/visualizer-view/visualizer-view.module';
+import {NzCardModule} from "ng-zorro-antd/card";
 
 @NgModule({
     declarations: [AppComponent, ExplorerViewComponent],
-    imports: [BrowserModule, AppRoutingModule, CommonModule, LayoutWrapperModule, VisualizerViewModule],
+    imports: [BrowserModule, AppRoutingModule, CommonModule, LayoutWrapperModule, VisualizerViewModule, NzCardModule],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

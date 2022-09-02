@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GraphOptions} from '@antv/g6-core';
+import G6 from "@antv/g6";
 
 @Injectable({
     providedIn: 'root',
@@ -10,39 +11,31 @@ export class G6ConfigService {
     public g6GraphConfig: GraphOptions = {
         container: 'graph-container',
         fitView: true,
-        animate: true,
         modes: {
             default: ['drag-canvas', 'drag-node', 'zoom-canvas'],
         },
         defaultNode: {
             style: {
-                fill: '#41228D',
+                fill: '#d4a63b',
             },
         },
         defaultEdge: {
             style: {
-                stroke: '#41228D',
+                stroke: '#1a34e7',
             },
         },
         nodeStateStyles: {
             hover: {
-                fill: 'lightsteelblue',
-                fillOpacity: 0.1,
-                lineWidth: 10,
-            },
-            click: {
-                stroke: '#000',
-                lineWidth: 3,
-            },
+                stroke: '#c61a1a',
+                lineWidth: 2
+            }
         },
         edgeStateStyles: {
-            click: {
-                stroke: 'steelblue',
-            },
             hover: {
-                stroke: 'steelblue',
+                stroke: '#c61a1a',
             },
         },
+
     };
 
     public data = {
@@ -51,20 +44,38 @@ export class G6ConfigService {
                 id: 'node1',
                 x: 100,
                 y: 200,
-                size: 70,
+                size: 30,
+                img: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                type: 'donut',
+                icon: {
+                    show: true,
+                    img: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                },
             },
             {
                 id: 'node2',
                 x: 300,
                 y: 200,
-                size: 70,
+                size: 30,
+                icon: {
+                    show: true,
+                    img: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                },
+                type: 'donut',
             },
         ],
         edges: [
             {
                 source: 'node1',
                 target: 'node2',
-                size: 15,
+                size: 5,
+                style: {
+                    endArrow: {
+                        path: G6.Arrow.triangle(10, 10, 5),
+                        d: 5
+                        // ...
+                    },
+                }
             },
         ],
     };

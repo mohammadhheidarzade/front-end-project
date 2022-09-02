@@ -37,5 +37,6 @@ export class G6BaseService extends G6ConfigService {
         this.g6UtilitiesService.handleNodeMouseLeave(graph);
         this.g6UtilitiesService.handleEdgeMouseEnter(graph);
         this.g6UtilitiesService.handleEdgeMouseLeave(graph);
+        this.g6UtilitiesService.handleNodeMouseDoubleClick(graph);
     }
 }

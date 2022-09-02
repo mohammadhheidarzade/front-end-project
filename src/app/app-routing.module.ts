@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {UploadComponent} from './shared/components/upload/upload.component';
 import {VisualizerViewComponent} from './view/visualizer-view/visualizer-view.component';
 import {ExplorerViewComponent} from './view/explorer-view/explorer-view.component';
 
@@ -22,10 +21,6 @@ const routes: Routes = [
     {
         path: 'data',
         children: [
-            {
-                path: 'upload',
-                component: UploadComponent,
-            },
             {
                 path: 'explorer',
                 component: ExplorerViewComponent,
