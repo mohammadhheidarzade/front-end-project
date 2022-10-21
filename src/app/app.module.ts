@@ -8,7 +8,8 @@ import {ExplorerViewComponent} from './view/explorer-view/explorer-view.componen
 import {VisualizerViewModule} from './view/visualizer-view/visualizer-view.module';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzTableModule} from 'ng-zorro-antd/table';
-import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzDividerModule} from 'ng-zorro-antd/divider';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [AppComponent, ExplorerViewComponent],
@@ -20,7 +21,8 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
         VisualizerViewModule,
         NzCardModule,
         NzTableModule,
-        NzDividerModule
+        NzDividerModule,
+        HttpClientModule,
     ],
     bootstrap: [AppComponent],
 })

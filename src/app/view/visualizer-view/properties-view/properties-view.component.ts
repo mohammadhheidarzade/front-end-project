@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {G6UtilitiesService} from '../services/g6-utilities.service';
-import {Item} from "@antv/g6";
+import {Item} from '@antv/g6';
+import {VisualizerService} from '../services/visualizer.service';
 
 @Component({
     selector: 'app-properties-view',
@@ -13,24 +14,35 @@ export class PropertiesViewComponent {
 
     data: ItemData[] = [];
 
-    public constructor(g6UtilityService: G6UtilitiesService) {
-        g6UtilityService.nodeDoubleClick.subscribe((item: Item) => {
+    public constructor(g6UtilityService: G6UtilitiesService, visualizerService: VisualizerService) {
+        g6UtilityService.nodeDoubleClick.subscribe(async (item: Item) => {
             this.isEnable = true;
-            this.firstOpen = false
+            this.firstOpen = false;
+
+            const node = visualizerService.graph.nodes.find((x) => x.graphId === item._cfg?.id);
+            if (node == null) return;
+
+            const properties = await visualizerService.getNodeProperties(node.id, /*node?.type*/ 'person');
+
+            this.data = [];
+            for (const propertiesKey in properties) {
+                this.data.push({
+                    title: propertiesKey,
+                    content: properties[propertiesKey],
+                });
+            }
         });
 
         this.data = [
             {
                 title: 'hello',
                 content: 'hello man',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
             },
             {
                 title: 'hello',
                 content: 'hello man',
-                avatar: 'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
-            }
-        ]
+            },
+        ];
     }
 }
 
